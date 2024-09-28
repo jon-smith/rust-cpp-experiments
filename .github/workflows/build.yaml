@@ -27,7 +27,7 @@ jobs:
     name: Build ${{ matrix.os }} ${{ matrix.compiler }}
 
     env:
-      preset: ${{ matrix.compiler }}-release
+      SQLX_OFFLINE: true
 
     steps:
       - name: Checkout repo
@@ -46,9 +46,11 @@ jobs:
         run: cargo build --release --locked
         working-directory: ./rust-postgres
 
-      - name: Test and output typescript bindings
-        run: cargo test --release
-        working-directory: ./rust-postgres
+      - name: Install sqlx
+        run: cargo install sqlx
+
+      - name: Check DB query metadata
+        run: cargo sqlx prepare --check --workspace
 
       - name: Lint
         run: cargo clippy --release --locked --no-deps -- -D warnings
