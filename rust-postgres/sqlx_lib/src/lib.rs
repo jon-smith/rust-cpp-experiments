@@ -39,6 +39,8 @@ pub struct RowData {
     pub time: Option<chrono::NaiveDateTime>,
 }
 
+pub use sqlx::Error;
+
 pub async fn read_all_rows_async() -> Result<Vec<RowData>, sqlx::Error> {
     dotenv().ok();
 

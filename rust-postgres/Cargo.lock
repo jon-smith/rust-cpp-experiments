@@ -959,7 +959,6 @@ dependencies = [
 name = "rust_exe"
 version = "0.1.0"
 dependencies = [
- "sqlx",
  "sqlx_lib",
  "tokio",
 ]
