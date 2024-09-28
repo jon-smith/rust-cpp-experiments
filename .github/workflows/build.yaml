@@ -46,8 +46,8 @@ jobs:
         run: cargo build --release --locked
         working-directory: ./rust-postgres
 
-      - name: Install sqlx
-        run: cargo install sqlx
+      - name: Install sqlx-cli
+        run: cargo install sqlx-cli --no-default-features --features postgres
 
       - name: Check DB query metadata
         run: cargo sqlx prepare --check --workspace
