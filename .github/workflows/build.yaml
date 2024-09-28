@@ -1,0 +1,56 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-14]
+        include:
+          - os: ubuntu-24.04
+            compiler: gcc
+          - os: windows-2022
+            compiler: msvc-x64
+          - os: macos-14
+            compiler: clang
+
+    runs-on: ${{ matrix.os }}
+
+    name: Build ${{ matrix.os }} ${{ matrix.compiler }}
+
+    env:
+      preset: ${{ matrix.compiler }}-release
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure VS Toolchain (Windows)
+        if: matrix.os == 'windows-2022'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Cache dependencies
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: rust-postgres -> target
+
+      - name: Build
+        run: cargo build --release --locked
+          working-directory: ./rust-postgres
+
+      - name: Test and output typescript bindings
+        run: cargo test --release
+          working-directory: ./rust-postgres
+
+      - name: Lint
+        run: cargo clippy --release --locked --no-deps -- -D warnings
+          working-directory: ./rust-postgres
+        if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-24.04'

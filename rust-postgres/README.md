@@ -32,6 +32,8 @@ sqlx db create
 (cd sqlx_lib && sqlx migrate run)
 ```
 
+If the database structure changes, the query metadata will need to be updated by running `cargo sqlx prepare --workspace`.
+
 ## Build/Run
 
 ### Rust
