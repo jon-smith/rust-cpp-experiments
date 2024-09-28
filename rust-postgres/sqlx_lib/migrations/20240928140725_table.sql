@@ -1,0 +1,6 @@
+CREATE TABLE "datatable"(
+	"id" INT4 NOT NULL PRIMARY KEY,
+	"info" VARCHAR NOT NULL,
+	"data" JSON NOT NULL,
+	"time" TIMESTAMP
+);

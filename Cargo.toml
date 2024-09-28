@@ -1,0 +1,8 @@
+[workspace]
+
+resolver = "2"
+
+members = [
+    "rust-postgres/rust_exe",
+    "rust-postgres/sqlx_lib"
+]
