@@ -2,7 +2,7 @@
 async fn main() -> Result<(), sqlx::Error> {
     println!("Testing db access...");
 
-    sqlx_lib::test_db().await?;
+    sqlx_lib::read_all_rows_async().await?;
 
     Ok(())
 }
