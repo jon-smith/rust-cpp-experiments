@@ -38,7 +38,11 @@ If the database structure changes, the query metadata will need to be updated by
 
 ## Build/Run
 
-### C++ + Rust
+### Rust only
+
+`cargo build` to build the lib and exe, `cargo run` to run the exe.
+
+### C++
 
 ```sh
 preset=gcc-release
@@ -46,7 +50,3 @@ cmake --preset ${preset}
 cmake --build out/build/${preset}
 out/build/${preset}/RustCxxPostgres
 ```
-
-### Rust only
-
-`cargo build` to build the lib and exe, `cargo run` to run the exe.
