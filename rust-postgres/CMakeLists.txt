@@ -45,7 +45,7 @@ if (APPLE)
 elseif (WIN32)
 
     target_link_libraries(
-        rust_cxx_cmake 
+        ${PROJECT_NAME} 
         PRIVATE 
         "bcrypt" "Secur32")
 
