@@ -28,6 +28,7 @@ jobs:
 
     env:
       SQLX_OFFLINE: true
+      preset: ${{ matrix.compiler }}-release
 
     steps:
       - name: Checkout repo
@@ -42,7 +43,18 @@ jobs:
         with:
           workspaces: rust-postgres -> target
 
-      - name: Build
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Config
+        run: cmake --preset ${{ env.preset }}
+        working-directory: ./rust-postgres
+
+      - name: Build CMake project (C++ and Rust)
+        run: cmake --build out/build/${{ env.preset }}
+        working-directory: ./rust-postgres
+
+      - name: Build Rust code alone
         run: cargo build --release --locked
         working-directory: ./rust-postgres
 
@@ -57,7 +69,7 @@ jobs:
         run: cargo sqlx prepare --check --workspace
         working-directory: ./rust-postgres
 
-      - name: Lint
+      - name: Lint Rust code
         run: cargo clippy --release --locked --no-deps -- -D warnings
         working-directory: ./rust-postgres
         if: github.event_name == 'pull_request' && matrix.os == 'macos-14'

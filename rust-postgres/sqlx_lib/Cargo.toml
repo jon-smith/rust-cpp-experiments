@@ -12,3 +12,7 @@ cxx = "1.0.128"
 
 [build-dependencies]
 cxx-build = "1.0"
+
+[lib]
+# Create a staticlib for C++ consumption and rlib for Rust consumption
+crate-type = ["staticlib", "rlib"]
