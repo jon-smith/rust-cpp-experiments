@@ -18,7 +18,7 @@ async fn main() -> Result<(), sqlx_lib::Error> {
             r.id,
             r.info,
             r.time.map(|t| t.to_string()).unwrap_or(String::from("")),
-            r.data.to_string()
+            *r.data
         );
     }
 
