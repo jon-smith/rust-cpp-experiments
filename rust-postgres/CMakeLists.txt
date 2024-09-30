@@ -44,6 +44,13 @@ if (APPLE)
 
 elseif (WIN32)
 
+    target_link_libraries(
+        rust_cxx_cmake 
+        PRIVATE 
+        "bcrypt" "Secur32")
+
 elseif (LINUX)
+
+    # None needed at present
 
 endif()
